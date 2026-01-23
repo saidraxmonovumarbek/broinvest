@@ -673,6 +673,40 @@ header {
 .hamburger {
     margin-left: auto;
 }
+@media (max-width: 1024px) {
+    #live-prices .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 24px;
+    }
+    .btn-page {
+        padding: 10px 24px;
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    .btn-page:hover {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+    }
+    .btn-page:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+@media (min-width: 1025px) {
+    .pagination { display: none; }
+}
     </style>
 </head>
 <body>
@@ -723,10 +757,14 @@ header {
     <div class="container">
         <h2>Live Prices</h2>
         <div id="market-loader" class="grid" style="margin-top: 32px;">
-            <!-- skeletons -->
+            <!-- skeletons added by JS -->
         </div>
         <div id="market-grid" class="grid" style="display: none; margin-top: 32px;"></div>
-        <div style="text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-muted);" id="last-updated"></div>
+        <div class="pagination" id="pagination" style="display:none; margin-top: 24px;">
+            <button class="btn-page" id="prev-btn" disabled>Previous</button>
+            <button class="btn-page" id="more-btn">More</button>
+        </div>
+        <div style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-muted);" id="last-updated"></div>
     </div>
 </section>
 
@@ -1188,9 +1226,12 @@ header {
         async function fetchMarketData() {
     const loader = document.getElementById('market-loader');
     const grid = document.getElementById('market-grid');
+    const pagination = document.getElementById('pagination');
+    const prevBtn = document.getElementById('prev-btn');
+    const moreBtn = document.getElementById('more-btn');
 
     loader.innerHTML = '';
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 10; i++) {
         loader.innerHTML += `<div class="coin-card small skeleton" style="height:90px;"></div>`;
     }
 
@@ -1199,38 +1240,68 @@ header {
         let coins = await res.json();
 
         const stables = ['usdt','usdc','busd','dai','usde','fdusd','tusd','pyusd','usd','eurc','usdd','usdp','frax','usdm','crvusd','gyen','seth','reth'];
-        coins = coins.filter(c => !stables.includes(c.symbol.toLowerCase())).slice(0, 56);
+        let allCoins = coins.filter(c => !stables.includes(c.symbol.toLowerCase())).slice(0, 56);
+        let page = 0;
+        const perPage = window.innerWidth <= 1024 ? 10 : allCoins.length;
+
+        function renderPage() {
+            grid.innerHTML = '';
+            const start = page * perPage;
+            const end = start + perPage;
+            const pageCoins = allCoins.slice(start, end);
+
+            pageCoins.forEach((coin, i) => {
+                const idx = start + i;
+                const ch = coin.price_change_percentage_24h?.toFixed(1) || '0.0';
+                const pos = Number(ch) > 0;
+
+                const card = document.createElement('div');
+                card.className = 'coin-card small';
+                card.innerHTML = `
+                    <div class="rank">#${idx+1}</div>
+                    <div class="coin-header">
+                        <img src="${coin.image}" alt="${coin.symbol}" loading="lazy">
+                        <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
+                        <div class="coin-price">$${coin.current_price.toLocaleString(undefined,{minimumFractionDigits:2})}</div>
+                    </div>
+                    <div class="sparkline-container">
+                        <canvas class="sparkline" width="120" height="24" data-spark="${coin.sparkline_in_7d.price.join(',')}"></canvas>
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                setTimeout(() => {
+                    const cv = card.querySelector('canvas');
+                    if (cv) animateSparkline(cv, coin.sparkline_in_7d.price, pos ? '#22c55e' : '#ef4444');
+                }, 60 + idx * 15);
+            });
+
+            if (window.innerWidth <= 1024) {
+                pagination.style.display = 'flex';
+                prevBtn.disabled = page === 0;
+                moreBtn.style.display = end >= allCoins.length ? 'none' : 'inline-block';
+                moreBtn.textContent = 'More';
+            } else {
+                pagination.style.display = 'none';
+            }
+
+            document.getElementById('last-updated').textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+        }
 
         loader.style.display = 'none';
         grid.style.display = 'grid';
-        grid.innerHTML = '';
+        renderPage();
 
-        coins.forEach((coin, i) => {
-            const ch = coin.price_change_percentage_24h?.toFixed(1) || '0.0';
-            const pos = Number(ch) > 0;
-
-            const card = document.createElement('div');
-            card.className = 'coin-card small';
-            card.innerHTML = `
-                <div class="rank">#${i+1}</div>
-                <div class="coin-header">
-                    <img src="${coin.image}" alt="${coin.symbol}" loading="lazy">
-                    <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
-                    <div class="coin-price">$${coin.current_price.toLocaleString(undefined,{minimumFractionDigits:2})}</div>
-                </div>
-                <div class="sparkline-container">
-                    <canvas class="sparkline" width="120" height="24" data-spark="${coin.sparkline_in_7d.price.join(',')}"></canvas>
-                </div>
-            `;
-            grid.appendChild(card);
-
-            setTimeout(() => {
-                const cv = card.querySelector('canvas');
-                if (cv) animateSparkline(cv, coin.sparkline_in_7d.price, pos ? '#22c55e' : '#ef4444');
-            }, 60 + i * 15);
+        moreBtn.addEventListener('click', () => {
+            page++;
+            renderPage();
         });
 
-        document.getElementById('last-updated').textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+        prevBtn.addEventListener('click', () => {
+            page--;
+            renderPage();
+        });
+
     } catch (e) {
         loader.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">Data unavailable</div>';
     }
