@@ -642,26 +642,70 @@
     z-index: 10;
     pointer-events: none;
 }
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.hamburger span {
+    width: 28px;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+    .hamburger { display: flex; }
+    nav#main-nav {
+        position: fixed;
+        top: -100%;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: center;
+        padding: 100px 24px 60px;
+        gap: 32px;
+        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+    }
+    nav#main-nav.nav-open { top: 0; }
+    nav#main-nav a { font-size: 18px; }
+    header { justify-content: space-between; padding: 0 24px; }
+}
+
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
     </style>
 </head>
 <body>
     <canvas id="global-bg-canvas" aria-hidden="true"></canvas>
     <header>
         <div class="logo">BroInvest</div>
-        <nav>
-            <a href="#market-overview">Markets</a>
-            <a href="#fear-greed">Fear &amp; Greed</a>
-            <a href="#market-dominance">Market & Dominance</a>
-<a href="#alt-season">Alt Season</a>
-<a href="#trending">Trending</a>
-<a href="#office">Office</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#performance">Performance</a>
-            <a href="#strategy">Strategy</a>
-            <a href="#security">Security</a>
-            <a href="#team">Team</a>
-            <a href="#" id="login-btn">Investor Login</a>
-        </nav>
+        <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+        <nav id="main-nav" class="nav-closed">
+    <a href="#market-overview">Markets</a>
+    <a href="#fear-greed">Fear & Greed</a>
+    <a href="#market-dominance">Market & Dominance</a>
+    <a href="#alt-season">Alt Season</a>
+    <a href="#office">Office</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#performance">Performance</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#security">Security</a>
+    <a href="#team">Team</a>
+    <a href="#" id="login-btn">Investor Login</a>
+</nav>
     </header>
 
     <main>
@@ -776,17 +820,6 @@
                 >75 = Altseason likely | <25 = BTC season dominant
             </div>
         </div>
-    </div>
-</section>
-
-<!-- TRENDING COINS -->
-<section id="trending">
-    <div class="container">
-        <h2>Trending Coins (24h)</h2>
-        <div id="trending-loader" class="grid" style="margin-top: 48px;">
-            <!-- skeletons added by JS -->
-        </div>
-        <div id="trending-grid" class="grid" style="display: none; margin-top: 48px;"></div>
     </div>
 </section>
 
@@ -1653,46 +1686,6 @@ async function fetchGlobalData() {
     }
 }
 
-async function fetchTrending() {
-    const loader = document.getElementById('trending-loader');
-    const grid = document.getElementById('trending-grid');
-    loader.innerHTML = '';
-    for (let i = 0; i < 6; i++) {
-        loader.innerHTML += `<div class="coin-card"><div class="skeleton loading-bar" style="width:120px;"></div><div class="skeleton loading-bar" style="width:180px;height:32px;"></div><div class="skeleton loading-bar" style="width:80px;"></div></div>`;
-    }
-
-    try {
-        const res = await fetch('https://api.coingecko.com/api/v3/search/trending');
-        const data = await res.json();
-        const coins = data.coins.slice(0, 9);
-
-        loader.style.display = 'none';
-        grid.style.display = 'grid';
-        grid.innerHTML = '';
-
-        coins.forEach(c => {
-            const coin = c.item;
-            const change = (Math.random() * 20 - 10).toFixed(1); // mock 24h; real needs /coins/markets
-            const isPos = change > 0;
-            const card = document.createElement('div');
-            card.className = 'coin-card';
-            card.innerHTML = `
-                <div class="coin-header">
-                    <div>
-                        <div style="font-size:13px;color:var(--text-muted);">${coin.name}</div>
-                        <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
-                    </div>
-                </div>
-                <div class="coin-price">$${coin.score.toFixed(0)} rank</div>
-                <div class="change ${isPos?'positive':'negative'}">${isPos?'+':''}${change}%</div>
-            `;
-            grid.appendChild(card);
-        });
-    } catch (e) {
-        loader.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">Trending data unavailable.</div>';
-    }
-}
-
 // Call them
 window.addEventListener('load', () => {
     // ... existing calls ...
@@ -1834,6 +1827,25 @@ function renderPortfolio() {
         });
     });
 }
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('main-nav');
+
+hamburger?.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('nav-open');
+});
+
+// Close on link click (mobile)
+nav?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+            hamburger.classList.remove('active');
+            nav.classList.remove('nav-open');
+        }
+    });
+});
 
         // ── Global subtle network background ─────────────────────────────────────
 (function() {
