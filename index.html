@@ -662,7 +662,7 @@
     .hamburger { display: flex; }
     nav#main-nav {
         position: fixed;
-        top: -100%;
+        top: -100vh;                /* start hidden above */
         left: 0;
         right: 0;
         background: rgba(0,0,0,0.98);
@@ -671,12 +671,12 @@
         align-items: center;
         padding: 100px 24px 60px;
         gap: 32px;
-        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1000;
+        transition: top 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 999;
     }
-    nav#main-nav.nav-open { top: 0; }
-    nav#main-nav a { font-size: 18px; }
-    header { justify-content: space-between; padding: 0 24px; }
+    nav#main-nav.nav-open {
+        top: 0;
+    }
 }
 
 .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
