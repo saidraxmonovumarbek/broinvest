@@ -682,31 +682,38 @@
 .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+header {
+    justify-content: space-between;
+}
+.hamburger {
+    margin-left: auto;
+}
     </style>
 </head>
 <body>
     <canvas id="global-bg-canvas" aria-hidden="true"></canvas>
     <header>
-        <div class="logo">BroInvest</div>
-        <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-        <nav id="main-nav" class="nav-closed">
-    <a href="#market-overview">Markets</a>
-    <a href="#fear-greed">Fear & Greed</a>
-    <a href="#market-dominance">Market & Dominance</a>
-    <a href="#alt-season">Alt Season</a>
-    <a href="#office">Office</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#performance">Performance</a>
-    <a href="#strategy">Strategy</a>
-    <a href="#security">Security</a>
-    <a href="#team">Team</a>
-    <a href="#" id="login-btn">Investor Login</a>
-</nav>
-    </header>
+    <div class="logo">BroInvest</div>
+    <nav id="main-nav" class="nav-closed">
+        <a href="#market-overview">Markets</a>
+        <a href="#fear-greed">Fear & Greed</a>
+        <a href="#market-dominance">Market & Dominance</a>
+        <a href="#alt-season">Alt Season</a>
+        <a href="#office">Office</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#performance">Performance</a>
+        <a href="#strategy">Strategy</a>
+        <a href="#security">Security</a>
+        <a href="#team">Team</a>
+        <a href="#" id="login-btn">Investor Login</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
 
     <main>
         <!-- HERO -->
