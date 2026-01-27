@@ -295,74 +295,6 @@
     margin-top: 6px;
 }
 
-        /* FEAR & GREED */
-        .gauge-container {
-            width: 240px;
-            height: 240px;
-            margin: 48px auto;
-            position: relative;
-        }
-
-        .gauge {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .gauge-inner {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            background: var(--bg-alt);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .gauge-value {
-            font-size: 72px;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .gauge-class {
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-
-        .historical-bars {
-            display: flex;
-            gap: 4px;
-            height: 120px;
-            align-items: flex-end;
-            margin-top: 48px;
-        }
-
-        .hist-bar {
-            flex: 1;
-            background: var(--accent);
-            border-radius: 4px 4px 0 0;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .hist-bar::after {
-            content: attr(data-date);
-            position: absolute;
-            bottom: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
         /* PORTFOLIO */
         .portfolio-grid {
             display: grid;
@@ -494,45 +426,6 @@
             font-size: 36px;
             font-weight: 700;
             color: #fff;
-        }
-
-        /* LOGIN MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--bg-alt);
-            width: 100%;
-            max-width: 960px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .modal-header {
-            padding: 24px 32px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 24px;
-            cursor: pointer;
         }
 
         /* CONTACT */
@@ -711,20 +604,6 @@ header {
 nav#main-nav {
     margin: 0 auto;
 }
-
-/* Semi-circular gauge background */
-#fear-gauge {
-    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-}
-
-#fear-content svg path {
-    stroke-dasharray: 314; /* approx circumference half */
-    stroke-dashoffset: 314;
-    animation: fillArc 1.5s ease-out forwards;
-}
-@keyframes fillArc {
-    to { stroke-dashoffset: 0; }
-}
     </style>
 </head>
 <body>
@@ -734,14 +613,12 @@ nav#main-nav {
     <nav id="main-nav" class="nav-closed">
         <a href="#hero">Home</a>
         <a href="#live-prices">Live Prices</a>
-        <a href="#market-overview">Market Overview</a>
         <a href="#office">Office</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#performance">Performance</a>
         <a href="#strategy">Strategy</a>
         <a href="#security">Security</a>
         <a href="#team">Team</a>
-        <a href="#" id="login-btn">Investor Login</a>
     </nav>
     <div class="hamburger" id="hamburger">
         <span></span>
@@ -765,7 +642,6 @@ nav#main-nav {
 
                 <div class="cta-buttons">
                     <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
-                    <a href="#" id="login-cta" class="btn btn-secondary">Investor Login</a>
                 </div>
             </div>
         </section>
@@ -783,56 +659,6 @@ nav#main-nav {
             <button class="btn-page" id="more-btn">More</button>
         </div>
         <div style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-muted);" id="last-updated"></div>
-    </div>
-</section>
-
-<!-- MARKET OVERVIEW -->
-<section id="market-overview">
-    <div class="container">
-        <h2>Market Overview</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 64px;">
-            
-            <!-- Left: Total Market Cap -->
-            <div style="text-align: center;">
-                <h3 style="font-size: 28px; margin-bottom: 24px;">Total Market Cap</h3>
-                <div id="dominance-loader" style="margin: 60px auto;">
-                    <div class="skeleton" style="width: 240px; height: 80px;"></div>
-                </div>
-                <div id="dominance-content" style="display: none;">
-                    <div id="total-mc" style="font-size: 60px; font-weight: 700; line-height: 1;"></div>
-                    <div id="mc-change" style="font-size: 20px; margin-top: 12px;"></div>
-                    <div style="margin-top: 24px; font-size: 14px; color: var(--text-muted);">Updated live</div>
-                </div>
-            </div>
-
-       <!-- Right: Fear & Greed -->
-<div style="text-align: center;">
-    <div id="fear-loader" style="margin: 60px auto;">
-        <div class="skeleton" style="width:340px;height:170px;border-radius:170px 170px 0 0;"></div>
-    </div>
-    <div id="fear-content" style="display:none;position:relative;width:340px;height:170px;margin:0 auto;">
-        <svg width="340" height="170" viewBox="0 0 340 170">
-            <defs>
-                <linearGradient id="fearGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#ef4444"/>
-                    <stop offset="20%" stop-color="#f97316"/>
-                    <stop offset="40%" stop-color="#f59e0b"/>
-                    <stop offset="60%" stop-color="#eab308"/>
-                    <stop offset="80%" stop-color="#84cc16"/>
-                    <stop offset="100%" stop-color="#22c55e"/>
-                </linearGradient>
-            </defs>
-            <path d="M 30 140 A 140 140 0 0 1 310 140" fill="none" stroke="url(#fearGrad)" stroke-width="50" stroke-linecap="round"/>
-            <circle id="fear-dot" cx="170" cy="140" r="20" fill="#fff" stroke="#111" stroke-width="4"/>
-        </svg>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
-            <div id="fear-value" style="font-size:72px;font-weight:700;line-height:1;color:#fff;">0</div>
-            <div id="fear-class" style="font-size:20px;font-weight:600;margin-top:8px;color:#fff;">Neutral</div>
-        </div>
-    </div>
-    <div style="margin-top:24px;font-size:14px;color:var(--text-muted);">90-day trend • Updated live</div>
-</div>
-        </div>
     </div>
 </section>
 
@@ -1073,47 +899,7 @@ nav#main-nav {
         This is not an offer to sell securities. Investments involve risk of loss of principal. 
         Past performance is no guarantee of future results.
     </footer>
-
-    <!-- LOGIN MODAL -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>Investor Portal • BroInvest</div>
-                <button class="close-modal" id="close-modal">×</button>
-            </div>
-            
-            <div style="padding: 48px;">
-                <div style="background: var(--bg); padding: 32px; border-radius: 8px; margin-bottom: 48px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
-                        <div>Portfolio Value</div>
-                        <div style="font-size: 28px; font-weight: 700;">$248.3M</div>
-                    </div>
-                    <div style="color: var(--green);">+6.4% (30d)</div>
-                </div>
-                
-                <div style="margin-bottom: 32px;">
-                    <div style="font-weight: 600; margin-bottom: 16px;">Recent Performance</div>
-                    <div style="height: 140px; background: var(--bg); border-radius: 8px; position: relative; overflow: hidden;">
-                        <canvas id="modal-equity" width="800" height="140"></canvas>
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
-                    <div>
-                        <div style="color: var(--text-muted);">Available for Deposit</div>
-                        <div style="font-size: 32px; font-weight: 700; margin-top: 8px;">$0.00</div>
-                        <button class="btn btn-secondary" style="margin-top: 16px; opacity: 0.6; cursor: not-allowed;">Deposit (Coming Soon)</button>
-                    </div>
-                    <div>
-                        <div style="color: var(--text-muted);">Withdrawal Queue</div>
-                        <div style="font-size: 32px; font-weight: 700; margin-top: 8px;">0 Pending</div>
-                        <button class="btn btn-secondary" style="margin-top: 16px; opacity: 0.6; cursor: not-allowed;">Request Withdrawal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+         
     <script>
         // Particle background for hero
         const canvas = document.getElementById('hero-canvas');
@@ -1521,72 +1307,7 @@ function animateSparkline(canvas, data, color) {
             // Drawdown mock (negative values)
             const drawdownData = [0, -3, -12, -4, -9, -18, -7, -22, -14, -26, -11, -19, -8, -15, -5];
             drawLineChart('drawdown', drawdownData.map(v => Math.abs(v)), '#ef4444', true);
-            
-            // Modal equity simple line
-            const modalCanvas = document.getElementById('modal-equity');
-            if (modalCanvas) {
-                const mctx = modalCanvas.getContext('2d');
-                mctx.strokeStyle = '#22c55e';
-                mctx.lineWidth = 2;
-                
-                mctx.beginPath();
-                mctx.moveTo(20, 100);
-                mctx.quadraticCurveTo(150, 60, 300, 90);
-                mctx.quadraticCurveTo(500, 40, 780, 75);
-                mctx.stroke();
-            }
         }
-
-        // Login modal
-        const loginBtn = document.getElementById('login-btn');
-        const loginCta = document.getElementById('login-cta');
-        const modal = document.getElementById('login-modal');
-        const closeModal = document.getElementById('close-modal');
-
-        function openLogin() {
-            modal.style.display = 'flex';
-            // Re-draw modal chart if needed
-            setTimeout(() => {
-                const modalCanvas = document.getElementById('modal-equity');
-                if (modalCanvas) {
-                    const mctx = modalCanvas.getContext('2d');
-                    mctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
-                    mctx.strokeStyle = '#22c55e';
-                    mctx.lineWidth = 2.5;
-                    mctx.shadowBlur = 8;
-                    mctx.shadowColor = '#22c55e';
-                    mctx.beginPath();
-                    mctx.moveTo(40, 110);
-                    mctx.lineTo(180, 65);
-                    mctx.lineTo(340, 95);
-                    mctx.lineTo(520, 55);
-                    mctx.lineTo(720, 80);
-                    mctx.stroke();
-                }
-            }, 50);
-        }
-
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openLogin();
-        });
-
-        if (loginCta) {
-            loginCta.addEventListener('click', (e) => {
-                e.preventDefault();
-                openLogin();
-            });
-        }
-
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
 
         // Contact form
         const contactForm = document.getElementById('contact-form');
@@ -1597,13 +1318,6 @@ function animateSparkline(canvas, data, color) {
                 contactForm.reset();
             });
         }
-
-        // Keyboard navigation support
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                modal.style.display = 'none';
-            }
-        });
 
         // Auto refresh market every 60 seconds
         setInterval(() => {
@@ -1643,28 +1357,6 @@ function animateSparkline(canvas, data, color) {
                 }
             }, 12000);
         });
-
-        // ── Market Dominance, Alt Season, Trending ────────────────────────────────
-async function fetchGlobalData() {
-    try {
-        // Total market + dominance
-        const globalRes = await fetch('https://api.coingecko.com/api/v3/global');
-        const global = await globalRes.json();
-        document.getElementById('total-mc').textContent = '$' + global.data.total_market_cap.usd.toLocaleString();
-        const mcCh = global.data.market_cap_change_percentage_24h_usd?.toFixed(2) || '0.00';
-        document.getElementById('mc-change').innerHTML = `<span class="${mcCh > 0 ? 'positive' : 'negative'}">${mcCh > 0 ? '+' : ''}${mcCh}%</span> (24h)`;
-
-        const btcDom = global.data.market_cap_percentage.btc?.toFixed(2) || '0';
-        const ethDom = global.data.market_cap_percentage.eth?.toFixed(2) || '0';
-        document.getElementById('btc-dom').textContent = btcDom + '%';
-        document.getElementById('eth-dom').textContent = ethDom + '%';
-
-        document.getElementById('dominance-loader').style.display = 'none';
-        document.getElementById('dominance-content').style.display = 'block';
-    } catch (e) {
-        console.error('Global data error', e);
-    }
-}
 
 // Call them
 window.addEventListener('load', () => {
@@ -1826,91 +1518,6 @@ nav?.querySelectorAll('a').forEach(link => {
         }
     });
 });
-
-// ── Updated Fear & Greed + MCAP Pie ───────────────────────────────────────
-async function fetchGlobalData() {
-    try {
-        const globalRes = await fetch('https://api.coingecko.com/api/v3/global');
-        const global = await globalRes.json();
-
-        // Market Cap
-        const mc = global.data.total_market_cap.usd;
-document.querySelector('#dominance-content #total-mc').textContent = 
-    '$' + (mc >= 1e12 ? (mc/1e12).toFixed(2)+'T' : (mc/1e9).toFixed(2)+'B');
-const mcCh = global.data.market_cap_change_percentage_24h_usd?.toFixed(2) || '0.00';
-document.querySelector('#dominance-content #mc-change').innerHTML = 
-    `<span class="${mcCh > 0 ? 'positive' : 'negative'}">${mcCh > 0 ? '+' : ''}${mcCh}% (24h)</span>`;
-document.getElementById('dominance-loader').style.display = 'none';
-document.getElementById('dominance-content').style.display = 'block';
-
-        // Pie chart
-        const ctx = document.getElementById('mcap-pie').getContext('2d');
-        const btcPct = global.data.market_cap_percentage.btc || 0;
-        const ethPct = global.data.market_cap_percentage.eth || 0;
-        const otherPct = 100 - btcPct - ethPct;
-
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['BTC', 'ETH', 'Others'],
-                datasets: [{
-                    data: [btcPct, ethPct, otherPct],
-                    backgroundColor: ['#f59e0b', '#3b82f6', '#6b7280'],
-                    borderWidth: 0,
-                    cutout: '70%'
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: true }
-                }
-            }
-        });
-
-    } catch (e) {
-        console.error('Global data error', e);
-    }
-}
-
-// ── Fear & Greed (speedometer style) ──────────────────────────────────────
-async function fetchFearGreed() {
-    const loader = document.getElementById('fear-loader');
-    const content = document.getElementById('fear-content');
-
-    try {
-        const res = await fetch('https://api.alternative.me/fng/?limit=1');
-        const data = await res.json();
-        if (data.data && data.data.length) {
-            const val = parseInt(data.data[0].value);
-            const cls = data.data[0].value_classification;
-
-            document.getElementById('fear-value').textContent = val;
-            document.getElementById('fear-class').textContent = cls;
-
-            // Rotate needle (0 = extreme fear, 100 = extreme greed)
-            const angle = (val / 100) * 180 - 90; // -90° to +90°
-            const needle = document.createElement('div');
-            needle.style.position = 'absolute';
-            needle.style.bottom = '50%';
-            needle.style.left = '50%';
-            needle.style.width = '4px';
-            needle.style.height = '120px';
-            needle.style.background = '#e5e5e5';
-            needle.style.transformOrigin = 'bottom center';
-            needle.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-            needle.style.borderRadius = '4px 4px 0 0';
-            needle.style.boxShadow = '0 0 8px rgba(0,0,0,0.6)';
-            document.querySelector('#fear-content > div').appendChild(needle);
-
-            loader.style.display = 'none';
-            content.style.display = 'block';
-        }
-    } catch (e) {
-        console.error('Fear & Greed error', e);
-    }
-}
 
 // Call in load
 window.addEventListener('load', () => {
