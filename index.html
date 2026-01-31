@@ -69,10 +69,11 @@
   color: var(--accent);
 }
 
-    nav {
-        display: flex;
-        gap: 32px;
-    }
+  nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;   /* 🔥 ensures perfect vertical alignment */
+}
 
     nav a {
         color: var(--text-muted);
@@ -237,6 +238,84 @@
 
 }
 
+/* ===============================
+   NAV DROPDOWN (DESKTOP)
+================================ */
+
+.nav-item {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 0;
+  min-width: 180px;
+
+  display: flex;                 /* 🔥 Always defined */
+  flex-direction: column;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  z-index: 2000;
+
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-item.open .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-menu a {
+  padding: 10px 18px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.dropdown-menu a:hover {
+  background: var(--bg-alt);
+  color: var(--accent);
+}
+
+/* Show dropdown */
+.nav-item.open .dropdown-menu {
+  display: flex;
+}
+
+/* Arrow animation */
+.dropdown-arrow {
+  font-size: 12px;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+
+.nav-item.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Hide dropdown system on mobile */
+@media (max-width: 1024px) {
+  .dropdown-menu {
+    position: static;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    padding-left: 16px;
+  }
+
+  .dropdown-arrow {
+    display: none;
+  }
+}
 
 .hero-curve {
   position: absolute;
@@ -870,11 +949,18 @@
   <a href="#results" onclick="smoothScroll('#results'); return false;">Results</a>
   <a href="#teachers" onclick="smoothScroll('#teachers'); return false;">Teachers</a>
   <a href="#locations" onclick="smoothScroll('#locations'); return false;">Locations</a>
-  <a href="#atmosphere" onclick="smoothScroll('#atmosphere'); return false;">Atmosphere</a>
+  <div class="nav-item dropdown" id="atmosphereDropdown">
+  <a href="#atmosphere" id="atmosphereLink">
+    Atmosphere <span class="dropdown-arrow">⌄</span>
+  </a>
+
+  <div class="dropdown-menu">
+    <a href="#events" onclick="smoothScroll('#events'); return false;">Events</a>
+    <a href="#mock-tests" onclick="smoothScroll('#mock-tests'); return false;">Mock Tests</a>
+    <a href="#printing" onclick="smoothScroll('#printing'); return false;">Printing</a>
+  </div>
+</div>
   <a href="#approach" onclick="smoothScroll('#approach'); return false;">Approach</a>
-  <a href="#events" onclick="smoothScroll('#events'); return false;">Events</a>
-  <a href="#mock-tests" onclick="smoothScroll('#mock-tests'); return false;">Mock Tests</a>
-  <a href="#printing" onclick="smoothScroll('#printing'); return false;">Printing</a>
   <a href="#faq" onclick="smoothScroll('#faq'); return false;">FAQ</a>
   <a href="#contact" onclick="smoothScroll('#contact'); return false;" style="color:#22c55e;font-weight:700;">Connect</a>
 </nav>
@@ -1420,6 +1506,36 @@ document.addEventListener("DOMContentLoaded", () => {
       // Toggle current
       item.classList.toggle("active");
     });
+  });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const dropdown = document.getElementById("atmosphereDropdown");
+  const link = document.getElementById("atmosphereLink");
+
+  link.addEventListener("click", (e) => {
+
+    if (window.innerWidth > 1024) {
+
+      if (!dropdown.classList.contains("open")) {
+        e.preventDefault();               // first click = open only
+        dropdown.classList.add("open");
+      } else {
+        dropdown.classList.remove("open"); // second click = go to section
+      }
+
+    }
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove("open");
+    }
   });
 
 });
