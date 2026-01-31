@@ -3,1327 +3,1504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeadStart • Elite Education & Learning Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>BroInvest • Nexus-class Private Digital Asset Investment Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-    :root {
-        --bg: #ffffff;
-        --bg-alt: #f8fafc;
-        --text: #1e293b;
-        --text-muted: #64748b;
-        --accent: #22c55e;
-        --accent-dark: #16a34a;
-        --secondary: #4ade80;
-        --green: #22c55e;
-        --border: #e2e8f0;
-        --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-        --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        :root {
+            --bg: #000000;
+            --bg-alt: #0a0a0a;
+            --text: #e5e5e5;
+            --text-muted: #a1a1aa;
+            --accent: #00f5ff;
+            --accent-dark: #00b8c4;
+            --secondary: #7c3aed;
+            --green: #22c55e;
+            --red: #ef4444;
+            --border: #27272a;
+            
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 48px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+        }
+
+        nav {
+            margin-left: auto;
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding-top: 72px;
+        }
+
+        section {
+            padding: 120px 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 48px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HERO */
+        #hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 48px;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .hero-content h1 {
+            font-size: 68px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .hero-content h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .value-prop {
+            font-size: 21px;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s;
+        }
+
+        .value-prop.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #aum {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+            font-feature-settings: "tnum";
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s;
+        }
+
+        #aum.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .aum-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s;
+        }
+
+        .cta-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+       #live-prices .grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+@media (min-width: 1200px) {
+    #live-prices .grid {
+        grid-template-columns: repeat(8, 1fr); /* still fits well */
     }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: var(--font-main);
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.6;
-        overflow-x: hidden;
-    }
-
-    header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  z-index: 1000;
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  padding: 0 48px;
+}
+.coin-card.small {
+    padding: 10px;
+    font-size: 11px;
+    text-align: left;
+    min-height: 90px;
+}
+.coin-card.small .rank {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.coin-card.small .coin-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.coin-card.small img {
+    width: 18px;
+    height: 18px;
+}
+.coin-card.small .coin-symbol {
+    font-size: 12px;
+    font-weight: 600;
+}
+.coin-card.small .coin-price {
+    font-size: 12px;
+    font-weight: 500;
+}
+.sparkline-container {
+    height: 24px;
+    margin-top: 6px;
 }
 
-   .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+        /* PORTFOLIO */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 48px;
+        }
+
+        .donut-container {
+            width: 280px;
+            height: 280px;
+            position: relative;
+        }
+
+        canvas.donut {
+            width: 100%;
+            height: 100%;
+        }
+
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .alloc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alloc-bar {
+            height: 6px;
+            background: var(--accent);
+            border-radius: 9999px;
+            flex: 1;
+            margin: 0 16px;
+        }
+
+        /* PERFORMANCE */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .chart-container {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            height: 320px;
+            position: relative;
+        }
+
+        canvas.performance-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* STRATEGY */
+        .strategy-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .step {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* SECURITY */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .security-item {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        /* TEAM */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .team-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 96px;
+            height: 96px;
+            background: var(--secondary);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* CONTACT */
+        form {
+            max-width: 640px;
+            margin-top: 48px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 48px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .disclaimer {
+            margin-top: 48px;
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            section { padding: 80px 32px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .charts-grid { grid-template-columns: 1fr; }
+            h2 { font-size: 32px; }
+            .hero-content h1 { font-size: 52px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { gap: 16px; font-size: 13px; }
+            header { padding: 0 24px; height: 64px; }
+            .cta-buttons { flex-direction: column; }
+            .gauge-container { width: 180px; height: 180px; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #27272a 25%, #3f3f46 50%, #27272a 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 6px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .loading-bar {
+            height: 12px;
+            margin-bottom: 12px;
+        }
+        #global-bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: none;
+    background: transparent;
 }
 
-.logo-img {
-  height: 34px;
-  width: auto;
-  object-fit: contain;
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 245, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0); }
+}
+#map-pin {
+    z-index: 10;
+    pointer-events: none;
+}
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1100;
 }
 
-.logo-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-}
-
-nav {
-  display: flex;
-  gap: 32px;
-  justify-content: center;   /* 🔥 center horizontally */
-}
-
-    nav a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 14px;
-        transition: var(--transition);
-        position: relative;
-        white-space: nowrap;
-    }
-
-    nav a:hover {
-        color: var(--text);
-    }
-
-    nav a::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background: var(--accent);
-        transition: var(--transition);
-    }
-
-    nav a:hover::after {
-        width: 100%;
-    }
-
-    main {
-        padding-top: 72px;
-    }
-
-    section {
-  padding: 120px 48px;
-  border-bottom: 1px solid var(--border);
-}
-
-    h2 {
-        font-size: 42px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        margin-bottom: 24px;
-        position: relative;
-        display: inline-block;
-    }
-
-    h2::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 48px;
-        height: 3px;
-        background: var(--accent);
-    }
-
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-
-    .btn {
-        padding: 16px 32px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 15px;
-        cursor: pointer;
-        transition: var(--transition);
-        border: none;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .btn-primary {
-    background: white;
-    color: #1b941b; /* darker gradient green */
-    border: 2px solid white;
+.hamburger span {
+    width: 28px;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
     transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-    background: #1b941b;
-    color: white;
-    transform: translateY(-2px);
-}
-
-   .btn-secondary {
-    background: transparent;
-    color: white;                /* ← change here */
-    border: 2px solid white;     /* cleaner contrast on green */
-}
-
-.btn-secondary:hover {
-    background: white;
-    color: #1b941b;              /* darker green from gradient */
-}
-
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        z-index: 1100;
-    }
-
-    .hamburger span {
-        width: 28px;
-        height: 3px;
-        background: var(--text);
-        border-radius: 2px;
-        transition: all 0.3s ease;
-    }
-
- /* UNIVERSAL HAMBURGER ANIMATION (DESKTOP + MOBILE) */
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-}
-
 @media (max-width: 1024px) {
-
-    /* SHOW HAMBURGER */
-    .hamburger {
-        display: flex;
-        margin-left: auto;
-    }
-
-    /* HIDE NAV COMPLETELY BY DEFAULT */
+    .hamburger { display: flex; }
     nav#main-nav {
-        display: none;              /* 🔥 CRITICAL FIX */
         position: fixed;
-        top: 72px;                  /* below header */
+        top: -100vh;                /* start hidden above */
         left: 0;
         right: 0;
-        background: rgba(255,255,255,0.98);
+        background: rgba(0,0,0,0.98);
         backdrop-filter: blur(20px);
         flex-direction: column;
         align-items: center;
-        padding: 32px 24px;
-        gap: 14px;
-        z-index: 2000;
+        padding: 100px 24px 60px;
+        gap: 32px;
+        transition: top 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 999;
     }
-
-    /* SHOW NAV ONLY WHEN OPEN */
     nav#main-nav.nav-open {
-        display: flex;              /* 🔥 CRITICAL FIX */
+        top: 0;
     }
-
-  nav#main-nav a {
-    font-size: 15px;
-    padding: 6px 0;
 }
 
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+header {
+    justify-content: space-between;
 }
-
-/* ===============================
-   NAV DROPDOWN (DESKTOP)
-================================ */
-
-.nav-item {
-  position: relative;
+.hamburger {
+    margin-left: auto;
 }
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 0;
-  min-width: 180px;
-
-  display: flex;                 /* 🔥 Always defined */
-  flex-direction: column;
-
-  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
-  z-index: 2000;
-
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.nav-item.open .dropdown-menu {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.dropdown-menu a {
-  padding: 10px 18px;
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.dropdown-menu a:hover {
-  background: var(--bg-alt);
-  color: var(--accent);
-}
-
-/* Show dropdown */
-.nav-item.open .dropdown-menu {
-  display: flex;
-}
-
-/* Arrow animation */
-.dropdown-arrow {
-  font-size: 12px;
-  margin-left: 4px;
-  transition: transform 0.3s ease;
-}
-
-.nav-item.open .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-/* Hide dropdown system on mobile */
 @media (max-width: 1024px) {
-  .dropdown-menu {
-    position: static;
-    border: none;
-    box-shadow: none;
-    display: flex;
-    padding-left: 16px;
-  }
-
-  .dropdown-arrow {
-    display: none;
-  }
+    #live-prices .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 24px;
+    }
+    .btn-page {
+        padding: 10px 24px;
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    .btn-page:hover {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+    }
+    .btn-page:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
 }
-
-.hero-curve {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 118px;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.hero-curve svg {
-  width: 115%;
-  height: 100%;
-  display: block;
-}
-
-#hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 140px 48px 180px;
-  background: linear-gradient(135deg, #3eaf3e 0%, #1b941b 100%);
-}
-
-#hero {
-  border-bottom: none !important;
-}
-
-.hero-inner {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: center;
-  z-index: 2;
-  position: relative;
-  color: white;
-}
-
-/* ✅ MOBILE FONT FIX (homepage hero only) */
-@media (max-width: 768px) {
-
-  #hero h1 {
-    font-size: 38px !important;
-    line-height: 1.15;
-  }
-
-  #hero p {
-    font-size: 18px !important;
-    line-height: 1.5;
-  }
-
-  #hero a {
-    font-size: 16px !important;
-    padding: 14px 28px !important;
-  }
-
-  #hero {
-    padding: 120px 24px 160px !important;
-  }
-}
-
-/* ================================
-   LOCATIONS – DESKTOP 2x2 STRUCTURE
-================================ */
-
-/* Location Info Card */
-.location-box {
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 24px;     /* 🔥 smoother corners */
-  padding: 40px;
-  line-height: 1.8;
-  transition: all 0.3s ease;
-}
-
-/* Slight premium hover effect (desktop only) */
 @media (min-width: 1025px) {
-  .location-box:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-  }
+    .pagination { display: none; }
 }
 
-.locations-wrapper {
-  margin-top: 64px;
+nav#main-nav {
+    margin: 0 auto;
 }
-
-/* DESKTOP */
-@media (min-width: 1025px) {
-
-  .locations-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 420px;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .map-box {
-    height: 420px;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 1024px) {
-
-  .locations-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-  }
-
-  /* Reorder elements for correct mobile flow */
-  .locations-wrapper .location-box:nth-child(1) { order: 1; }
-  .locations-wrapper .map-box:nth-child(3) { order: 2; }
-
-  .locations-wrapper .location-box:nth-child(2) { order: 3; }
-  .locations-wrapper .map-box:nth-child(4) { order: 4; }
-
-  .map-box {
-    height: 320px;
-  }
-}
-
-  .home-stats .container {
-    gap: 20px; /* optional but recommended: tighter spacing */
-  }
-
-@media (max-width: 768px) {
-
-  .home-stats .container {
-    grid-template-columns: repeat(2, 1fr); /* 2x2 layout */
-  }
-
-  .home-stats .stat-card {
-    aspect-ratio: 1 / 1;   /* 🔥 forces perfect square */
-    padding: 20px;
-    
-    /* center everything vertically */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-/* DESKTOP */
-.home-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
-  text-align: center;
-}
-
-/* ===============================
-   HERO METRICS (UNIFIED VERSION)
-================================ */
-
-.hero-metrics {
-  background: #ffffff;
-  padding: 80px 48px;
-}
-
-.stats-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  margin-top: -75px;
-
-  padding: 50px 40px;
-
-  border: 2px solid var(--accent);
-  border-radius: 32px;
-  background: #ffffff;
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-
-  text-align: center;
-}
-
-/* Individual stat */
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Number */
-.metric-number {
-  font-size: 42px;
-  font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-
-/* Label */
-.stat-label {
-  font-size: 15px;
-  color: #6b7280;
-  max-width: 180px;
-}
-
-/* ===============================
-   MOBILE VERSION
-================================ */
-
-@media (max-width: 768px) {
-  .stats-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    padding: 40px 24px;
-  }
-
-  .metric-number {
-    font-size: 32px;
-  }
-
-  .stat-label {
-    font-size: 14px;
-  }
-}
-
-/* CARD */
-.metric-card {
-  position: relative;
-  background: #ffffff;
-  border: 1.5px solid var(--accent);
-  border-radius: 24px;
-  aspect-ratio: 1 / 1;          /* 🔥 perfect square */
-  padding: 36px 20px;           /* ~10% smaller */
-  text-align: center;
-  transition: all 0.35s ease;
-  cursor: pointer;
-}
-
-/* subtle inner glow */
-.metric-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 rgba(0,0,0,0);
-  transition: all 0.35s ease;
-}
-
-/* NUMBER */
-.metric-number {
-  font-size: 40px;
-  font-weight: 800;
-  color: #111827;
-  margin-bottom: 8px;
-}
-
-/* LABEL */
-.metric-label {
-  font-size: 15px;
-  font-weight: 500;
-  color: #6b7280;
-}
-
-/* ===== HOVER STATE ===== */
-.metric-card:hover {
-  background: #f0fdf4;
-}
-
-.metric-card:hover::before {
-  box-shadow:
-    inset 0 0 22px rgba(34,197,94,0.14),
-    inset 0 0 48px rgba(34,197,94,0.08);
-}
-
-.metric-card:hover .metric-icon {
-  background: var(--accent);
-}
-
-.metric-card:hover .metric-svg {
-  stroke: #ffffff;
-}
-
-/* Typography */
-
-.hero-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: 64px;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: white;
-}
-
-.hero-subtitle {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 500;
-  font-size: 22px;
-  margin-top: 24px;
-  color: white;
-}
-
-.hero-buttons {
-  margin-top: 48px;
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* ================= HERO ANIMATION ================= */
-
-.hero-title,
-.hero-subtitle {
-  opacity: 0;
-  transform: translateY(60px);
-  animation: heroRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.hero-subtitle {
-  animation-delay: 0.1s;
-}
-
-.hero-buttons {
-  opacity: 0;
-  transform: translateY(60px);
-  animation: heroRise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.7s; /* waits until title finishes */
-}
-
-@keyframes heroRise {
-  from {
-    opacity: 0;
-    transform: translateY(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===============================
-   COURSES SPLIT LAYOUT
-================================ */
-
-.courses-section {
-  min-height: 100vh;
-  border-bottom: none;
-}
-
-.courses-wrapper {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  min-height: calc(100vh - 72px);
-}
-
-/* LEFT SIDE */
-.courses-sidebar {
-  border-right: 1px solid var(--border);
-  padding: 60px 32px;
-  background: #ffffff;
-}
-
-.courses-sidebar h3 {
-  margin-bottom: 32px;
-  font-size: 20px;
-}
-
-.course-btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 14px 0;
-  font-size: 15px;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;          /* 🔥 required */
-  white-space: nowrap;
-}
-
-.course-btn:hover {
-  color: var(--accent);
-}
-
-.course-btn.active {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-/* ===============================
-   COURSE NAV HOVER ANIMATION (DESKTOP ONLY)
-================================ */
-
-@media (min-width: 901px) {
-
-  .course-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 6px;             /* slight spacing from text */
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.3s ease;
-  }
-
-  .course-btn:hover::after {
-    width: 100%;
-  }
-
-}
-
-/* RIGHT SIDE */
-.courses-content {
-  padding: 80px;
-  background: #ffffff;
-  position: relative;
-}
-
-.course-placeholder {
-  color: var(--text-muted);
-  font-size: 18px;
-}
-
-/* Course content animation */
-.course-details {
-  animation: fadeInCourse 0.3s ease forwards;
-}
-
-@keyframes fadeInCourse {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 900px) {
-
-  .courses-wrapper {
-    display: block;           /* 🔥 important */
-    min-height: auto;
-  }
-
-  .courses-section {
-    min-height: auto;
-    padding: 60px 24px;
-  }
-
-  .courses-sidebar {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 12px 20px 20px 20px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .courses-sidebar h3 {
-    margin-bottom: 8px;
-  }
-
-  .course-btn {
-    display: none;
-  }
-
-  .courses-content {
-    padding: 20px 20px;   /* slightly tighter */
-  }
-
-}
-
-/* ===============================
-   MOBILE COURSE DROPDOWN
-================================ */
-
-.course-dropdown {
-  display: none;
-  margin-bottom: 20px;
-}
-
-.course-dropdown-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #ffffff;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--text);
-  transition: var(--transition);
-}
-
-.course-dropdown-header:hover {
-  border-color: var(--accent);
-}
-
-.dropdown-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dropdown-arrow {
-  transition: transform 0.3s ease;
-}
-
-.course-dropdown.active .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.course-dropdown-menu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 12px 12px;
-  background: #ffffff;
-}
-
-.course-dropdown.active .course-dropdown-menu {
-  max-height: 300px;
-}
-
-.course-dropdown-menu div {
-  padding: 12px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.course-dropdown-menu div:hover {
-  background: var(--bg-alt);
-  color: var(--accent);
-}
-
-/* SHOW ONLY ON MOBILE */
-@media (max-width: 900px) {
-  .course-dropdown {
-    display: block;
-  }
-}
-
-/* ===============================
-   FAQ SECTION
-================================ */
-
-.faq-section {
-  padding: 100px 48px;
-  border-bottom: none;
-}
-
-.faq-container {
-  max-width: 800px;   /* keeps it centered & ~60% feel */
-  margin: 0 auto;
-  text-align: center;
-}
-
-.faq-item {
-  margin-top: 24px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.faq-question {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 20px 0;
-  font-size: 17px;
-  font-weight: 600;
-  text-align: left;
-  cursor: pointer;
-  color: var(--text);
-  transition: var(--transition);
-  position: relative;
-}
-
-.faq-question:hover {
-  color: var(--accent);
-}
-
-/* Plus icon effect */
-.faq-question::after {
-  content: "+";
-  position: absolute;
-  right: 0;
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.faq-item.active .faq-question::after {
-  transform: rotate(45deg);
-}
-
-/* Answer */
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  opacity: 0;
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  padding-right: 24px;
-}
-
-.faq-item.active .faq-answer {
-  max-height: 200px;
-  opacity: 1;
-  margin-bottom: 20px;
-}
-
-</style>
+    </style>
 </head>
 <body>
+    <canvas id="global-bg-canvas" aria-hidden="true"></canvas>
     <header>
-        <div class="logo">
-  <img src="assets/logo-headstart.png" alt="HeadStart Logo" class="logo-img">
-  <span class="logo-text">HeadStart</span>
-</div>
-       <nav id="main-nav">
-  <a href="#hero" onclick="smoothScroll('#hero'); return false;">Home</a>
-  <a href="#about" onclick="smoothScroll('#about'); return false;">About Us</a>
-  <a href="#courses" onclick="smoothScroll('#courses'); return false;">Courses</a>
-  <a href="#results" onclick="smoothScroll('#results'); return false;">Results</a>
-  <a href="#teachers" onclick="smoothScroll('#teachers'); return false;">Teachers</a>
-  <a href="#locations" onclick="smoothScroll('#locations'); return false;">Locations</a>
-  <div class="nav-item dropdown" id="atmosphereDropdown">
-  <a href="#atmosphere" id="atmosphereLink">
-    Atmosphere <span class="dropdown-arrow">⌄</span>
-  </a>
+    <div class="logo">BroInvest</div>
+    <nav id="main-nav" class="nav-closed">
+        <a href="#hero">Home</a>
+        <a href="#live-prices">Live Prices</a>
+        <a href="#office">Office</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#performance">Performance</a>
+        <a href="#strategy">Strategy</a>
+        <a href="#security">Security</a>
+        <a href="#team">Team</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
 
-  <div class="dropdown-menu">
-    <a href="#events" onclick="smoothScroll('#events'); return false;">Events</a>
-    <a href="#mock-tests" onclick="smoothScroll('#mock-tests'); return false;">Mock Tests</a>
-    <a href="#printing" onclick="smoothScroll('#printing'); return false;">Printing</a>
-  </div>
-</div>
-  <a href="#approach" onclick="smoothScroll('#approach'); return false;">Approach</a>
-  <a href="#faq" onclick="smoothScroll('#faq'); return false;">FAQ</a>
-  <a href="#contact" onclick="smoothScroll('#contact'); return false;" style="color:#22c55e;font-weight:700;">Connect</a>
-</nav>
-        <div class="hamburger" id="hamburger">
-            <span></span><span></span><span></span>
-        </div>
-    </header>
     <main>
+        <!-- HERO -->
+        <section id="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container hero-content">
+                <h1>Nexus-class private digital asset investment platform.</h1>
+                <p class="value-prop">Precision capital allocation for high-net-worth individuals, family offices, and institutions seeking asymmetric digital asset exposure.</p>
+                
+                <div id="aum">
+                    <span id="aum-number">$0</span>
+                    <div class="aum-label">Assets Under Management</div>
+                </div>
 
-<section id="hero" class="hero-section">
-  <div class="container hero-inner">
-
- <h1 class="hero-title">
-  HEADSTART FOR YOUR FUTURE
-</h1>
-
-    <p class="hero-subtitle">
-  A modern learning environment — everything at HeadStart English School.
-</p>
-
-   <div class="hero-buttons">
-  <a href="#courses" class="btn btn-primary">
-    Explore Courses →
-  </a>
-
-  <a href="#results" class="btn btn-secondary">
-    See Our Results →
-  </a>
-</div>
-
-  </div>
-
-  <div class="hero-curve">
-    <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
-      <path d="M0,40 C240,0 480,0 720,20 960,40 1200,80 1440,120 L1440,140 L0,140 Z" fill="#ffffff"/>
-    </svg>
-  </div>
-</section>
-
-<section class="hero-metrics">
-  <div class="stats-wrapper">
-
-    <div class="stat-item">
-      <div class="metric-number" data-target="2">0</div>
-      <div class="stat-label">Branches</div>
-    </div>
-
-    <div class="stat-item">
-      <div class="metric-number" data-target="+100">0</div>
-      <div class="stat-label">Students with IELTS 8.0–8.5</div>
-    </div>
-
-    <div class="stat-item">
-      <div class="metric-number" data-target="+500">0</div>
-      <div class="stat-label">Students with IELTS 7.0–7.5</div>
-    </div>
-
-    <div class="stat-item">
-      <div class="metric-number" data-target="+20">0</div>
-      <div class="stat-label">Experienced Teachers</div>
-    </div>
-
-  </div>
-</section>
-
-  <section id="about">
-  <div class="container">
-    <h2>About Us</h2>
-    <p>Soon</p>
-  </div>
-</section>
- 
-<section id="courses" class="courses-section">
-  <div class="courses-wrapper">
-
-    <!-- LEFT SIDE -->
-    <div class="courses-sidebar">
-      <h3>Our Courses</h3>
-
-      <!-- MOBILE COURSE DROPDOWN -->
-<div class="course-dropdown">
-  <div class="course-dropdown-header" id="courseDropdownToggle">
-    <span class="dropdown-left">
-      🔍 <span id="selectedCourseText">Choose your course</span>
-    </span>
-    <span class="dropdown-arrow">⌄</span>
-  </div>
-
-  <div class="course-dropdown-menu" id="courseDropdownMenu">
-    <div data-course="ielts">IELTS Academic</div>
-    <div data-course="cefr">CEFR</div>
-    <div data-course="sat">SAT</div>
-    <div data-course="german">German</div>
-    <div data-course="russian">Russian</div>
-    <div data-course="turkish">Turkish</div>
-  </div>
-</div>
-
-      <button class="course-btn active" data-course="ielts">
-        IELTS Academic
-      </button>
-
-      <button class="course-btn" data-course="cefr">
-        CEFR
-      </button>
-
-      <button class="course-btn" data-course="sat">
-        SAT
-      </button>
-
-      <button class="course-btn" data-course="german">
-        German
-      </button>
-
-      <button class="course-btn" data-course="russian">
-        Russian
-      </button>
-
-      <button class="course-btn" data-course="turkish">
-        Turkish
-      </button>
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="courses-content" id="course-content">
-      <div class="course-placeholder">
-        Please select a course to see more information.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-        <section id="results">
-            <div class="container">
-                <h2>Student Performance</h2>
-                <div style="margin-top: 64px; color: var(--text-muted); font-size: 14px;">Soon bro, soon.</div>
+                <div class="cta-buttons">
+                    <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+                </div>
             </div>
         </section>
 
-        <section id="teachers">
+        <!-- LIVE PRICES -->
+<section id="live-prices">
+    <div class="container">
+        <h2>Live Prices</h2>
+        <div id="market-loader" class="grid" style="margin-top: 32px;">
+            <!-- skeletons added by JS -->
+        </div>
+        <div id="market-grid" class="grid" style="display: none; margin-top: 32px;"></div>
+        <div class="pagination" id="pagination" style="display:none; margin-top: 24px;">
+            <button class="btn-page" id="prev-btn" disabled>Previous</button>
+            <button class="btn-page" id="more-btn">More</button>
+        </div>
+        <div style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-muted);" id="last-updated"></div>
+    </div>
+</section>
+
+<!-- OFFICE LOCATION -->
+<section id="office">
+    <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+        <div>
+            <h2>Our Office</h2>
+            <div style="margin-top: 32px; font-size: 16px; line-height: 1.8;">
+                <p><strong>BroInvest</strong><br>
+                Uzbekistan Street, 116A<br>
+                Samarkand, Uzbekistan</p>
+                <p style="margin-top: 24px;">📞 <a href="tel:+998935030612" style="color: var(--accent); text-decoration: none;">+998 93 503 06 12</a></p>
+                <p style="margin-top: 32px; color: var(--text-muted); font-size: 14px;">
+                    Open for qualified investors by appointment only.
+                </p>
+            </div>
+        </div>
+        
+        <div style="position: relative; height: 400px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #0a0a0a;">
+            <div id="map-pin" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 8px rgba(0, 245, 255, 0.3); animation: pulse 2s infinite;"></div>
+            <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3079.999!2d66.93683!3d39.639216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDM4JzIxLjIiTiA2NsKwNTYnMjAuNCJF!5e1!3m2!1sen!2sus!4v1737620000000&t=k" 
+    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+        </div>
+    </div>
+</section>
+
+        <!-- PORTFOLIO DASHBOARD -->
+        <section id="portfolio">
             <div class="container">
-                <h2>Our Teachers</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-top: 48px;">
-                    <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center;">
-                        <div style="width: 96px; height: 96px; background: var(--secondary); border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: #fff;">DI</div>
-                        <strong>Dilmurod Isakulov</strong><br>Founder of HeadStart English School<br>IELTS 8.5, 10+ years experience in teaching.
+                <h2>Portfolio Dashboard (Public View)</h2>
+                <p style="max-width: 640px; color: var(--text-muted); margin-bottom: 48px;">
+                    Representative allocation demonstrating disciplined capital deployment across digital asset sectors.
+                </p>
+                
+                <div class="portfolio-grid">
+                    <div>
+                        <div class="donut-container">
+                            <canvas id="portfolio-donut" class="donut" width="280" height="280"></canvas>
+                        </div>
                     </div>
-                    <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center;">
-                        <div style="width: 96px; height: 96px; background: var(--secondary); border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: #fff;">OR</div>
-                        <strong>Otabek Ravshankulov</strong><br>Co-Founder of HeadStart English School<br>IELTS 8.5, 10+ years experience in teaching.
-                    </div>
-                    <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 32px; text-align: center;">
-                        <div style="width: 96px; height: 96px; background: var(--secondary); border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: #fff;">BI</div>
-                        <strong>Bunyod Inomov</strong><br>IELTS Teacher<br>IELTS 8.0, 500+ students.
+                    
+                    <div>
+                        <div class="allocation-list" id="allocation-list"></div>
+                        
+                        <div style="margin-top: 48px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                                <div>YTD Return</div>
+                                <div style="color: var(--green);">+41.2%</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                                <div>1-Year Return</div>
+                                <div style="color: var(--green);">+128.7%</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>Since Inception</div>
+                                <div style="color: var(--green);">+312%</div>
+                            </div>
+                            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+                                <div>Risk Score</div>
+                                <div style="font-size: 32px; font-weight: 700; margin-top: 8px;">8 / 10</div>
+                                <div style="color: var(--text-muted); font-size: 14px;">Moderate with disciplined hedging</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-<section id="locations">
-  <div class="container">
-
-    <h2>Our Locations</h2>
-
-    <div class="locations-wrapper">
-
-      <!-- FIRST BRANCH INFO -->
-      <div class="location-box">
-        <h3>Prospekt Branch (Main)</h3>
-        <p>
-          📍 <a href="https://maps.app.goo.gl/qYUqRRJAwVKkpo2G7" target="_blank">
-            View on Google Maps
-          </a>
-        </p>
-        <p style="margin-top:16px;">
-          ☎ <a href="tel:+998951840770">+998 95 184 0770</a>
-        </p>
-      </div>
-
-      <!-- SECOND BRANCH INFO -->
-      <div class="location-box">
-        <h3>Pushkin Branch</h3>
-        <p>
-          📍 <a href="https://maps.app.goo.gl/kuDv9Dba38rquouVA" target="_blank">
-            View on Google Maps
-          </a>
-        </p>
-        <p style="margin-top:16px;">
-          ☎ <a href="tel:+998995279080">+998 99 527 9080</a>
-        </p>
-      </div>
-
-      <!-- FIRST MAP -->
-      <div class="map-box">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3050.2487490362496!2d67.8321306!3d40.1367425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38b297402ce2533f%3A0xc0df93ceda7ed301!2sHeadStart%20English%20School!5e1!3m2!1sen!2s!4v1769689895048!5m2!1sen!2s"
-          width="100%"
-          height="100%"
-          style="border:0;"
-          loading="lazy">
-        </iframe>
-      </div>
-
-      <!-- SECOND MAP -->
-      <div class="map-box">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3051.5293663676457!2d67.8213217!3d40.1082049!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38b295612f18a46b%3A0x854d632cb9cb3a10!2sHeadsStart%20Pushkin%20branch!5e1!3m2!1sen!2s!4v1769689932222!5m2!1sen!2s"
-          width="100%"
-          height="100%"
-          style="border:0;"
-          loading="lazy">
-        </iframe>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section id="atmosphere">
-  <div class="container">
-    <h2>Atmosphere</h2>
-    <p>Soon</p>
-  </div>
-</section>
-
-
-        <section id="approach">
+        <!-- PERFORMANCE & RETURNS -->
+        <section id="performance">
             <div class="container">
-                <h2>Educational Approach</h2>
-                <div style="display: flex; flex-direction: column; gap: 48px; margin-top: 48px;">
-                    <div style="display: flex; gap: 32px;">
-                        <div style="width: 48px; height: 48px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">1</div>
-                        <div><strong>Personalized Learning</strong><br>Tailored curriculum based on student strengths and goals.</div>
+                <h2>Performance &amp; Returns</h2>
+                
+                <div class="charts-grid">
+                    <div>
+                        <div class="chart-container">
+                            <canvas id="equity-curve" class="performance-chart" width="600" height="280"></canvas>
+                        </div>
+                        <div style="text-align: center; margin-top: 12px; font-size: 14px; color: var(--text-muted);">Equity Curve (3Y)</div>
                     </div>
-                    <div style="display: flex; gap: 32px;">
-                        <div style="width: 48px; height: 48px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">2</div>
-                        <div><strong>Project-Based Mastery</strong><br>Real-world projects driving deep understanding.</div>
+                    
+                    <div>
+                        <div class="chart-container">
+                            <canvas id="drawdown" class="performance-chart" width="600" height="280"></canvas>
+                        </div>
+                        <div style="text-align: center; margin-top: 12px; font-size: 14px; color: var(--text-muted);">Maximum Drawdown</div>
                     </div>
-                    <div style="display: flex; gap: 32px;">
-                        <div style="width: 48px; height: 48px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">3</div>
-                        <div><strong>Holistic Development</strong><br>Academic + leadership + character education.</div>
+                </div>
+                
+                <div style="margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center;">
+                    <div>
+                        <div style="font-size: 42px; font-weight: 700;">1.82</div>
+                        <div style="color: var(--text-muted);">Sharpe Ratio</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 42px; font-weight: 700;">1.31</div>
+                        <div style="color: var(--text-muted);">Sortino Ratio</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 42px; font-weight: 700;">18.4%</div>
+                        <div style="color: var(--text-muted);">Annualized Volatility</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 48px; color: var(--text-muted); font-size: 14px;">
+                    Benchmark comparison vs BTC (+184%), ETH (+267%), S&amp;P 500 (+52%) over same period. Past performance is not indicative of future results.
+                </div>
+            </div>
+        </section>
+
+        <!-- STRATEGY -->
+        <section id="strategy">
+            <div class="container">
+                <h2>Investment Strategy</h2>
+                
+                <div class="strategy-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Market Cycle Analysis</strong><br>
+                            Multi-timeframe technical and on-chain analysis to identify regime shifts.
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Capital Allocation</strong><br>
+                            Dynamic weighting based on conviction tiers, liquidity, and correlation matrices.
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Risk Management</strong><br>
+                            Position sizing capped at 8%, trailing stops, and volatility-based hedging.
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Rebalancing &amp; Hedging</strong><br>
+                            Quarterly rebalancing with opportunistic tactical overlays.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="events">
-  <div class="container">
-    <h2>Events</h2>
-    <p>Soon</p>
-  </div>
-</section>
+        <!-- SECURITY & CUSTODY -->
+        <section id="security">
+            <div class="container">
+                <h2>Security &amp; Custody</h2>
+                
+                <div class="security-grid">
+                    <div class="security-item">
+                        <strong>Cold Storage</strong><br>
+                        98% of assets held in geographically distributed, air-gapped hardware security modules with multi-party computation.
+                    </div>
+                    <div class="security-item">
+                        <strong>Multi-Signature</strong><br>
+                        3-of-5 and 4-of-7 approval thresholds across institutional-grade custodians.
+                    </div>
+                    <div class="security-item">
+                        <strong>Operational Security</strong><br>
+                        SOC 2 Type II compliant infrastructure, zero-trust architecture, and regular penetration testing.
+                    </div>
+                    <div class="security-item">
+                        <strong>Audits &amp; Compliance</strong><br>
+                        Annual third-party audits by top-tier firms. Full regulatory compliance posture maintained.
+                    </div>
+                </div>
+                
+                <div class="disclaimer" style="margin-top: 64px;">
+                    No guarantees expressed or implied. All investments involve substantial risk of loss.
+                </div>
+            </div>
+        </section>
 
-<section id="mock-tests">
-  <div class="container">
-    <h2>Mock Tests</h2>
-    <p>Soon</p>
-  </div>
-</section>
+        <!-- TEAM -->
+        <section id="team">
+            <div class="container">
+                <h2>Team &amp; Governance</h2>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">AP</div>
+                        <strong>Yokubjon Umedovich</strong><br>
+                        Founder &amp; CEO<br>
+                        5+ years traditional finance, former macro PM at multi-billion AUM hedge fund.
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">SJ</div>
+                        <strong>Yokubjon</strong><br>
+                        Head of Research<br>
+                        Ex-Glassnode analyst, on-chain forensics specialist.
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">MK</div>
+                        <strong>Yokubjon</strong><br>
+                        Chief Risk Officer<br>
+                        Former Citadel risk lead.
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<section id="printing">
-  <div class="container">
-    <h2>Book Printing</h2>
-    <p>Soon</p>
-  </div>
-</section>
-
-<section id="faq" class="faq-section">
-  <div class="container faq-container">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        How long does it take to achieve an IELTS 7.0+ score?
-      </button>
-      <div class="faq-answer">
-        It depends on your current level. On average, students require 3–6 months of focused preparation with consistent practice and mock testing.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        Do you offer placement tests before enrollment?
-      </button>
-      <div class="faq-answer">
-        Yes. Every student takes a diagnostic test so we can accurately determine their level and recommend the right program.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        How experienced are your teachers?
-      </button>
-      <div class="faq-answer">
-        Our instructors have multiple years of teaching experience and specialize in exam-focused preparation, including IELTS and SAT.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        Do you provide mock exams?
-      </button>
-      <div class="faq-answer">
-        Yes. We regularly conduct full mock examinations under real test conditions to track student progress and improve performance.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">
-        Can I switch groups if my schedule changes?
-      </button>
-      <div class="faq-answer">
-        We try to accommodate schedule adjustments whenever possible, depending on seat availability and course structure.
-      </div>
-    </div>
-
-  </div>
-</section>
-
+        <!-- CONTACT -->
         <section id="contact">
             <div class="container">
-                <h2>Contact & Enrollment</h2>
-                <form style="max-width: 640px; margin-top: 48px;">
-                    <input type="text" placeholder="Full Name" required style="width:100%; background:var(--bg-alt); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:24px;">
-                    <input type="email" placeholder="Parent/Guardian Email" required style="width:100%; background:var(--bg-alt); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:24px;">
-                    <select required style="width:100%; background:var(--bg-alt); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:24px;">
-                        <option>Student Grade Level</option>
-                        <option>Grade 6-8</option>
-                        <option>Grade 9-10</option>
-                        <option>Grade 11-12</option>
+                <h2>Contact &amp; Onboarding</h2>
+                
+                <form id="contact-form">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Institutional Email" required>
+                    <select required>
+                        <option value="">Investor Type</option>
+                        <option>Family Office</option>
+                        <option>Fund</option>
+                        <option>High-Net-Worth Individual</option>
+                        <option>Institutional</option>
                     </select>
-                    <textarea placeholder="Tell us about your child's goals..." rows="5" style="width:100%; background:var(--bg-alt); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:24px;"></textarea>
-                    <button type="submit" class="btn btn-primary" style="width:100%;">Submit Inquiry</button>
+                    <textarea placeholder="Tell us about your investment objectives..." rows="5"></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Secure Inquiry</button>
                 </form>
-                <div style="margin-top: 48px; font-size: 14px; color: var(--text-muted);">All inquiries receive a response within 24 hours. Tours available by appointment.</div>
+                
+                <div style="margin-top: 48px; font-size: 14px; color: var(--text-muted);">
+                    All submissions are encrypted in transit. Qualified investors only.
+                </div>
             </div>
         </section>
     </main>
-    <footer style="padding:48px; border-top:1px solid var(--border); font-size:13px; color:var(--text-muted); text-align:center;">
-        © 2026 HeadStart Education Center. All rights reserved.<br>
-        Excellence in education. Results-driven learning.
-    </footer>
 
+    <footer>
+        © 2026 BroInvest. All rights reserved.<br>
+        This is not an offer to sell securities. Investments involve risk of loss of principal. 
+        Past performance is no guarantee of future results.
+    </footer>
+         
     <script>
-function smoothScroll(targetId) {
-    const target = document.querySelector(targetId);
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Particle background for hero
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // Gentle mouse influence
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 300) {
+                    this.speedX += dx / dist * 0.02;
+                    this.speedY += dy / dist * 0.02;
+                }
+                
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#00f5ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Text reveal
+        function revealElements() {
+            const h1 = document.querySelector('.hero-content h1');
+            const prop = document.querySelector('.value-prop');
+            const aum = document.getElementById('aum');
+            const ctas = document.querySelector('.cta-buttons');
+            
+            setTimeout(() => h1.classList.add('visible'), 400);
+            setTimeout(() => prop.classList.add('visible'), 800);
+            setTimeout(() => aum.classList.add('visible'), 1200);
+            setTimeout(() => ctas.classList.add('visible'), 1600);
+        }
+
+        // AUM counter
+        function animateAUM() {
+            const target = 2230000;
+            const aumEl = document.getElementById('aum-number');
+            let current = 0;
+            const increment = Math.ceil(target / 120);
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                aumEl.textContent = '$' + current.toLocaleString('en-US');
+            }, 20);
+        }
+
+        // Market data
+        let marketData = [];
+
+        async function fetchMarketData() {
+    const loader = document.getElementById('market-loader');
+    const grid = document.getElementById('market-grid');
+    const pagination = document.getElementById('pagination');
+    const prevBtn = document.getElementById('prev-btn');
+    const moreBtn = document.getElementById('more-btn');
+
+    loader.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+        loader.innerHTML += `<div class="coin-card small skeleton" style="height:90px;"></div>`;
     }
-    // Close mobile menu
-    const nav = document.getElementById('main-nav');
-    const hamburger = document.getElementById('hamburger');
-    if (nav.classList.contains('nav-open')) {
-        hamburger.classList.remove('active');
-        nav.classList.remove('nav-open');
+
+    try {
+        const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h');
+        let coins = await res.json();
+
+        const stables = ['usdt','usdc','busd','dai','usde','fdusd','tusd','pyusd','usd','eurc','usdd','usdp','frax','usdm','crvusd','gyen','seth','reth'];
+        let allCoins = coins.filter(c => !stables.includes(c.symbol.toLowerCase())).slice(0, 56);
+        let page = 0;
+        const perPage = window.innerWidth <= 1024 ? 10 : allCoins.length;
+
+        function renderPage() {
+            grid.innerHTML = '';
+            const start = page * perPage;
+            const end = start + perPage;
+            const pageCoins = allCoins.slice(start, end);
+
+            pageCoins.forEach((coin, i) => {
+                const idx = start + i;
+                const ch = coin.price_change_percentage_24h?.toFixed(1) || '0.0';
+                const pos = Number(ch) > 0;
+
+                const card = document.createElement('div');
+                card.className = 'coin-card small';
+                card.innerHTML = `
+                    <div class="rank">#${idx+1}</div>
+                    <div class="coin-header">
+                        <img src="${coin.image}" alt="${coin.symbol}" loading="lazy">
+                        <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
+                        <div class="coin-price">$${coin.current_price.toLocaleString(undefined,{minimumFractionDigits:2})}</div>
+                    </div>
+                    <div class="sparkline-container">
+                        <canvas class="sparkline" width="120" height="24" data-spark="${coin.sparkline_in_7d.price.join(',')}"></canvas>
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                setTimeout(() => {
+                    const cv = card.querySelector('canvas');
+                    if (cv) animateSparkline(cv, coin.sparkline_in_7d.price, pos ? '#22c55e' : '#ef4444');
+                }, 60 + idx * 15);
+            });
+
+            if (window.innerWidth <= 1024) {
+                pagination.style.display = 'flex';
+                prevBtn.disabled = page === 0;
+                moreBtn.style.display = end >= allCoins.length ? 'none' : 'inline-block';
+                moreBtn.textContent = 'More';
+            } else {
+                pagination.style.display = 'none';
+            }
+
+            document.getElementById('last-updated').textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+        }
+
+        loader.style.display = 'none';
+        grid.style.display = 'grid';
+        renderPage();
+
+        moreBtn.addEventListener('click', () => {
+            page++;
+            renderPage();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            page--;
+            renderPage();
+        });
+
+    } catch (e) {
+        loader.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">Data unavailable</div>';
     }
 }
-</script>
 
-<script>
+function animateSparkline(canvas, data, color) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!data || data.length < 2) return;
+
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const range = max - min || 1;
+
+    const stepX = canvas.width / (data.length - 1);
+    const points = data.map((v, i) => ({
+        x: i * stepX,
+        y: canvas.height - ((v - min) / range) * (canvas.height - 12) - 6
+    }));
+
+    let progress = 0;
+    const duration = 1200; // ms
+    const start = performance.now();
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = color;
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+
+        for (let i = 1; i < points.length; i++) {
+            if (i / points.length > progress) break;
+            ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+
+        if (progress < 1) {
+            progress = (performance.now() - start) / duration;
+            requestAnimationFrame(draw);
+        }
+    }
+
+    draw();
+}
+
+        // Fear & Greed
+      async function fetchFearGreed() {
+    const loader = document.getElementById('fear-loader');
+    const content = document.getElementById('fear-content');
+    try {
+        const res = await fetch('https://api.alternative.me/fng/?limit=1');
+        const data = await res.json();
+        if (data.data && data.data[0]) {
+            const val = parseInt(data.data[0].value);
+            const cls = data.data[0].value_classification;
+            document.getElementById('fear-value').textContent = val;
+            document.getElementById('fear-class').textContent = cls;
+            const percent = val / 100;
+            const cx = 30 + percent * 280;
+            document.getElementById('fear-dot').setAttribute('cx', cx);
+            loader.style.display = 'none';
+            content.style.display = 'block';
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+        // Portfolio Donut
+        function drawPortfolioDonut() {
+            const canvas = document.getElementById('portfolio-donut');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 110;
+            const innerRadius = 62;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const allocation = [
+                {name: 'Large Cap', percent: 42, color: '#22c55e'},
+                {name: 'Layer 1', percent: 26, color: '#eab308'},
+                {name: 'AI', percent: 14, color: '#a78bfa'},
+                {name: 'DeFi', percent: 11, color: '#60a5fa'},
+                {name: 'Infrastructure', percent: 7, color: '#f472b6'}
+            ];
+            
+            let startAngle = -0.5 * Math.PI; // start at top
+            
+            allocation.forEach(segment => {
+                const sliceAngle = (segment.percent / 100) * 2 * Math.PI;
+                
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+                ctx.fillStyle = segment.color;
+                ctx.fill();
+                
+                // Inner cutout
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, innerRadius, startAngle, startAngle + sliceAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = '#000000';
+                ctx.fill();
+                
+                startAngle += sliceAngle;
+            });
+            
+            // Center label
+            ctx.fillStyle = '#e5e5e5';
+            ctx.font = '700 18px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('ALLOCATION', centerX, centerY - 12);
+            
+            // Render allocation list
+            const list = document.getElementById('allocation-list');
+            if (list) {
+                list.innerHTML = '';
+                allocation.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'alloc-item';
+                    div.innerHTML = `
+                        <div>${item.name}</div>
+                        <div style="display: flex; align-items: center; gap: 12px; width: 140px;">
+                            <div class="alloc-bar" style="width: ${item.percent * 1.2}px; background: ${item.color};"></div>
+                            <div style="font-weight: 700; width: 32px;">${item.percent}%</div>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
+            }
+        }
+
+        // Simple line chart for equity curve and drawdown
+        function drawLineChart(canvasId, dataPoints, color, isArea = false) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            if (dataPoints.length < 2) return;
+            
+            const minVal = Math.min(...dataPoints);
+            const maxVal = Math.max(...dataPoints);
+            const range = maxVal - minVal || 1;
+            
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.5;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = color;
+            
+            ctx.beginPath();
+            
+            const stepX = w / (dataPoints.length - 1);
+            
+            dataPoints.forEach((val, i) => {
+                const x = i * stepX;
+                const normalized = (val - minVal) / range;
+                const y = h - (normalized * (h - 32) + 16);
+                
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            
+            ctx.stroke();
+            
+            if (isArea) {
+                ctx.lineTo(w, h);
+                ctx.lineTo(0, h);
+                ctx.fillStyle = color + '18';
+                ctx.fill();
+            }
+            
+            // Subtle grid
+            ctx.strokeStyle = '#27272a';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 5; i++) {
+                const y = (h / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+        }
+
+        // Mock performance data
+        function drawPerformanceCharts() {
+            // Equity curve mock data
+            const equityData = [100, 108, 95, 112, 128, 119, 142, 135, 158, 172, 165, 189, 210, 198, 223];
+            drawLineChart('equity-curve', equityData, '#22c55e', true);
+            
+            // Drawdown mock (negative values)
+            const drawdownData = [0, -3, -12, -4, -9, -18, -7, -22, -14, -26, -11, -19, -8, -15, -5];
+            drawLineChart('drawdown', drawdownData.map(v => Math.abs(v)), '#ef4444', true);
+        }
+
+        // Contact form
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Inquiry received. A member of our team will contact you within 48 hours.');
+                contactForm.reset();
+            });
+        }
+
+        // Auto refresh market every 60 seconds
+        setInterval(() => {
+            if (document.getElementById('market-grid').style.display !== 'none') {
+                fetchMarketData();
+            }
+        }, 60000);
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initParticles();
+            animateParticles();
+            revealElements();
+            animateAUM();
+            
+            // Fetch live data
+            fetchMarketData();
+            fetchFearGreed();
+            
+            // Draw static charts
+            setTimeout(() => {
+                drawPortfolioDonut();
+                drawPerformanceCharts();
+            }, 800);
+            
+            // Fake live update pulse on AUM every 12s
+            setInterval(() => {
+                const aumNum = document.getElementById('aum-number');
+                if (aumNum) {
+                    aumNum.style.transition = 'none';
+                    aumNum.style.opacity = '0.6';
+                    setTimeout(() => {
+                        aumNum.style.transition = 'opacity 0.6s';
+                        aumNum.style.opacity = '1';
+                    }, 80);
+                }
+            }, 12000);
+        });
+
+// Call them
+window.addEventListener('load', () => {
+    // ... existing calls ...
+    fetchGlobalData();
+    fetchTrending();
+});
+
+
+// Coin list for search/select (top 100)
+let coinList = [];
+
+async function loadCoinList() {
+    try {
+        const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1');
+        coinList = await res.json();
+        
+        // Populate portfolio select
+        const select = document.getElementById('portfolio-coin-select');
+        coinList.forEach(coin => {
+            const opt = document.createElement('option');
+            opt.value = coin.id;
+            opt.textContent = `${coin.name} (${coin.symbol.toUpperCase()})`;
+            select.appendChild(opt);
+        });
+    } catch (e) {
+        console.error('Coin list load failed');
+    }
+}
+
+function renderWatchlist() {
+    const empty = document.getElementById('watchlist-empty');
+    const grid = document.getElementById('watchlist-grid');
+    grid.innerHTML = '';
+    
+    if (watchlist.length === 0) {
+        empty.style.display = 'block';
+        grid.style.display = 'none';
+        return;
+    }
+    
+    empty.style.display = 'none';
+    grid.style.display = 'grid';
+    
+    watchlist.forEach(id => {
+        const coin = coinList.find(c => c.id === id);
+        if (!coin) return;
+        
+        const card = document.createElement('div');
+        card.className = 'coin-card';
+        card.innerHTML = `
+            <div class="coin-header">
+                <div>
+                    <div style="font-size:13px;color:var(--text-muted);">${coin.name}</div>
+                    <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
+                </div>
+            </div>
+            <div class="coin-price">$${coin.current_price.toLocaleString()}</div>
+            <div class="change ${coin.price_change_percentage_24h > 0 ? 'positive' : 'negative'}">
+                ${coin.price_change_percentage_24h > 0 ? '+' : ''}${coin.price_change_percentage_24h?.toFixed(1)}%
+            </div>
+            <button class="remove-btn" data-id="${id}">×</button>
+        `;
+        grid.appendChild(card);
+    });
+    
+    // Remove buttons
+    grid.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            watchlist = watchlist.filter(c => c !== id);
+            localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
+            renderWatchlist();
+        });
+    });
+}
+
+function renderPortfolio() {
+    const empty = document.getElementById('portfolio-empty');
+    const table = document.getElementById('portfolio-table');
+    const rows = document.getElementById('portfolio-rows');
+    rows.innerHTML = '';
+    
+    if (portfolio.length === 0) {
+        empty.style.display = 'block';
+        table.style.display = 'none';
+        return;
+    }
+    
+    empty.style.display = 'none';
+    table.style.display = 'block';
+    
+    let totalValue = 0;
+    let totalCost = 0;
+    
+    portfolio.forEach((holding, index) => {
+        const coin = coinList.find(c => c.id === holding.id);
+        if (!coin) return;
+        
+        const value = holding.quantity * coin.current_price;
+        const cost = holding.quantity * holding.buyPrice;
+        const pl = value - cost;
+        const plPct = cost > 0 ? (pl / cost * 100) : 0;
+        
+        totalValue += value;
+        totalCost += cost;
+        
+        const row = document.createElement('tr');
+        row.className = 'portfolio-row';
+        row.innerHTML = `
+            <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
+            <td style="text-align:right;">${holding.quantity.toLocaleString()}</td>
+            <td style="text-align:right;">$${holding.buyPrice.toFixed(2)}</td>
+            <td style="text-align:right;">$${coin.current_price.toLocaleString()}</td>
+            <td style="text-align:right;">$${value.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+            <td style="text-align:right; color: ${pl >= 0 ? 'var(--green)' : 'var(--red)'}">
+                $${pl.toFixed(2)} (${plPct.toFixed(1)}%)
+            </td>
+            <td><button class="remove-btn" data-index="${index}">×</button></td>
+        `;
+        rows.appendChild(row);
+    });
+    
+    const totalPl = totalValue - totalCost;
+    const totalPlPct = totalCost > 0 ? (totalPl / totalCost * 100) : 0;
+    document.getElementById('portfolio-total').innerHTML = `
+        Total Value: $${totalValue.toLocaleString(undefined, {minimumFractionDigits:2})} 
+        <span style="color: ${totalPl >= 0 ? 'var(--green)' : 'var(--red)'}">
+            (P/L: $${totalPl.toFixed(2)} | ${totalPlPct.toFixed(1)}%)
+        </span>
+    `;
+    
+    // Remove buttons
+    rows.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.index);
+            portfolio.splice(idx, 1);
+            localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(portfolio));
+            renderPortfolio();
+        });
+    });
+}
+
+// Hamburger menu
 const hamburger = document.getElementById('hamburger');
 const nav = document.getElementById('main-nav');
 
@@ -1331,215 +1508,115 @@ hamburger?.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     nav.classList.toggle('nav-open');
 });
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const elements = [
-    document.querySelector(".hero-title"),
-    document.querySelector(".hero-subtitle"),
-    document.querySelector(".hero-buttons")
-  ];
-
-  elements.forEach((el) => {
-    el.classList.add("hero-animate");
-  });
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const counters = document.querySelectorAll(".metric-number");
-  const statsSection = document.querySelector(".hero-metrics");
-
-  let hasAnimated = false; // prevents re-triggering
-
-  function animateCounter(counter) {
-    const target = +counter.getAttribute("data-target");
-    const duration = 1500; // 1.5 seconds
-    const startTime = performance.now();
-
-    function update(currentTime) {
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-
-      // ease-out effect (fast → slow)
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-
-      const value = Math.floor(easeOut * target);
-
-      counter.textContent =
-        counter.getAttribute("data-target").startsWith("+")
-          ? "+" + value
-          : value;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        counter.textContent = counter.dataset.target.includes("+")
-          ? counter.dataset.target
-          : target;
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries[0].isIntersecting && !hasAnimated) {
-        counters.forEach(counter => animateCounter(counter));
-        hasAnimated = true;
-      }
-    },
-    { threshold: 0.4 } // triggers when 40% visible
-  );
-
-  observer.observe(statsSection);
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const content = document.getElementById("course-content");
-  const buttons = document.querySelectorAll(".course-btn");
-
-  const dropdown = document.querySelector(".course-dropdown");
-  const toggle = document.getElementById("courseDropdownToggle");
-  const menu = document.getElementById("courseDropdownMenu");
-  const selectedText = document.getElementById("selectedCourseText");
-
-  /* ================= COURSE DATA ================= */
-
-  const courseData = {
-    ielts: `
-      <div class="course-details">
-        <h2>IELTS Academic</h2>
-        <p>Our flagship program focused on high band scores.</p>
-        <p><strong>Teachers:</strong> Experienced IELTS specialists</p>
-        <p><strong>Experience:</strong> 5+ years focused IELTS training</p>
-      </div>
-    `,
-    cefr: `
-      <div class="course-details">
-        <h2>CEFR Program</h2>
-        <p>Structured European-level English development.</p>
-      </div>
-    `,
-    sat: `
-      <div class="course-details">
-        <h2>SAT Preparation</h2>
-        <p>College entrance preparation program.</p>
-      </div>
-    `,
-    german: `
-      <div class="course-details">
-        <h2>German Program</h2>
-        <p>Beginner to advanced German training.</p>
-      </div>
-    `,
-    russian: `
-      <div class="course-details">
-        <h2>Russian Program</h2>
-        <p>Grammar, speaking and academic writing.</p>
-      </div>
-    `,
-    turkish: `
-      <div class="course-details">
-        <h2>Turkish Program</h2>
-        <p>Modern Turkish language development.</p>
-      </div>
-    `
-  };
-
-  /* ================= DESKTOP BUTTONS ================= */
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const selected = btn.getAttribute("data-course");
-      content.innerHTML = courseData[selected];
+// Close on link click (mobile)
+nav?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+            hamburger.classList.remove('active');
+            nav.classList.remove('nav-open');
+        }
     });
-  });
-
-  /* ================= MOBILE DROPDOWN ================= */
-
-  toggle?.addEventListener("click", () => {
-    dropdown.classList.toggle("active");
-  });
-
-  menu?.querySelectorAll("div").forEach(item => {
-    item.addEventListener("click", () => {
-
-      const selected = item.getAttribute("data-course");
-      selectedText.textContent = item.textContent;
-      dropdown.classList.remove("active");
-
-      content.innerHTML = courseData[selected];
-    });
-  });
-
 });
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const faqItems = document.querySelectorAll(".faq-item");
-
-  faqItems.forEach(item => {
-    const question = item.querySelector(".faq-question");
-
-    question.addEventListener("click", () => {
-
-      // Close others
-      faqItems.forEach(i => {
-        if (i !== item) i.classList.remove("active");
-      });
-
-      // Toggle current
-      item.classList.toggle("active");
-    });
-  });
-
+// Call in load
+window.addEventListener('load', () => {
+    fetchGlobalData();
+    fetchFearGreed();
+    // ... other calls
 });
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const dropdown = document.getElementById("atmosphereDropdown");
-  const link = document.getElementById("atmosphereLink");
-
-  link.addEventListener("click", (e) => {
-
-    if (window.innerWidth > 1024) {
-
-      if (!dropdown.classList.contains("open")) {
-        e.preventDefault();               // first click = open only
-        dropdown.classList.add("open");
-      } else {
-        dropdown.classList.remove("open"); // second click = go to section
-      }
-
+        // ── Global subtle network background ─────────────────────────────────────
+(function() {
+    const bgCanvas = document.getElementById('global-bg-canvas');
+    if (!bgCanvas) return;
+    
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+    let bgWidth, bgHeight;
+    
+    function resizeBg() {
+        bgWidth = bgCanvas.width = window.innerWidth;
+        bgHeight = bgCanvas.height = window.innerHeight;
     }
-  });
-
-  // Close dropdown if clicking outside
-  document.addEventListener("click", (e) => {
-    if (!dropdown.contains(e.target)) {
-      dropdown.classList.remove("open");
+    
+    class BgNode {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * bgWidth;
+            this.y = Math.random() * bgHeight;
+            this.size = Math.random() * 1.6 + 0.4;
+            this.vx = (Math.random() - 0.5) * 0.15;
+            this.vy = (Math.random() - 0.5) * 0.15;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > bgWidth || this.y < 0 || this.y > bgHeight) {
+                this.reset();
+            }
+        }
+        draw() {
+            bgCtx.globalAlpha = 0.25;
+            bgCtx.fillStyle = '#00f5ff';
+            bgCtx.beginPath();
+            bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            bgCtx.fill();
+        }
     }
-  });
-
-});
+    
+    function initBgNodes() {
+        bgParticles = [];
+        const count = Math.min(60, Math.floor((bgWidth * bgHeight) / 30000));
+        for (let i = 0; i < count; i++) {
+            bgParticles.push(new BgNode());
+        }
+    }
+    
+    function drawConnections() {
+        bgCtx.strokeStyle = '#00f5ff';
+        bgCtx.lineWidth = 0.4;
+        bgCtx.globalAlpha = 0.07;
+        
+        for (let i = 0; i < bgParticles.length; i++) {
+            for (let j = i + 1; j < bgParticles.length; j++) {
+                const dx = bgParticles[i].x - bgParticles[j].x;
+                const dy = bgParticles[i].y - bgParticles[j].y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 140) {
+                    bgCtx.globalAlpha = 0.07 * (1 - dist / 140);
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(bgParticles[i].x, bgParticles[i].y);
+                    bgCtx.lineTo(bgParticles[j].x, bgParticles[j].y);
+                    bgCtx.stroke();
+                }
+            }
+        }
+    }
+    
+    function animateBg() {
+        bgCtx.clearRect(0, 0, bgWidth, bgHeight);
+        bgParticles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        drawConnections();
+        requestAnimationFrame(animateBg);
+    }
+    
+    window.addEventListener('resize', () => {
+        resizeBg();
+        initBgNodes();
+    });
+    
+    resizeBg();
+    initBgNodes();
+    animateBg();
+})();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
