@@ -653,33 +653,35 @@
 @media (max-width: 900px) {
 
   .courses-wrapper {
-    grid-template-columns: 1fr;
+    display: block;           /* 🔥 important */
+    min-height: auto;
   }
 
   .courses-section {
-    padding: 60px 24px; /* 🔥 reduces big empty space above */
+    min-height: auto;
+    padding: 60px 24px;
   }
 
   .courses-sidebar {
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px 20px 20px; /* 🔥 smaller top padding */
+    padding: 12px 20px 20px 20px;
 
-    display: flex;              /* no grid anymore */
+    display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
   .courses-sidebar h3 {
-    margin-bottom: 8px; /* small clean spacing */
+    margin-bottom: 8px;
   }
 
   .course-btn {
-    display: none; /* hide old buttons */
+    display: none;
   }
 
   .courses-content {
-    padding: 32px 20px;
+    padding: 20px 20px;   /* slightly tighter */
   }
 
 }
